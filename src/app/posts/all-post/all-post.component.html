@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow-effect bg-secondary-theam">
+        <div class="card-body text-center">
+          <h3 class="text theam-center">All Blog posts</h3>
+          <p>from Here you can manage your blog posts</p>
+          <button class="btn btn-info bg-theame" routerLink="/posts/new">
+            Add New Post
+          </button>
+          <button class="btn btn-warning ml-2" routerLink="/">
+            Back to the Dashboard
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+ 
+<div class="col-md-12 " style="overflow-x: auto">
+      <div class="card shadow-effect ">
+        <div class="card-body ">
+          <table class="table row-border hover">
+            <thead>
+              <tr>
+                <td > No </td>
+                <td > Post image </td>
+                <td > Title </td>
+                <!-- <td> Excerpt </td> -->
+                <td > category </td>
+                <td > Date </td>
+                <td > Action </td>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let post of PostData; let i = index">
+                <td style="width: 1%">{{ i + 1 }}</td>
+                <td style="width: 5%">{{ post.postImgPath }}</td>
+                <td style="width: 5%" >{{ post.title }}</td>
+                <!-- <td style="width: 5%"> {{ post.excerpt }}</td> -->
+                <td style="width: 5%">{{ post.category.category }}</td>
+                <td style="width: 5%">{{post.createAt.seconds * 1000 + post.createAt.nanoseconds / 1000000 | date }}</td>
+                <td style="width: 25%"> <button class="bt btn-sm btn-warning" routerLink="/posts/new" [queryParams]="{id: post.id}"> Edit</button> 
+                <button class="btn btn-sm btn-danger ml-2" (click)="Delete(post.id)" >Delete</button>
+                <button *ngIf="!post.isFeatured" class="btn btn-sm btn-success ml-2" (click)="onFeatured(post.id,true)" >Mark Feature </button>
+                <button *ngIf="post.isFeatured" class="btn btn-sm btn-info ml-2" (click)="onFeatured(post.id,false)" >Remove Feature</button> </td>
+               
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+</div>

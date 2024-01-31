@@ -1,0 +1,60 @@
+<div class="container content-center">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="card bg-secondary-theam shadow-effect">
+        <div class="card-body">
+          <h2 class="text-center">Login Form</h2>
+          <p style="font-size: 12px;">Please Login to your admin account to Post a New blog</p>
+          <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.value)">
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input
+                type="email"
+                name="email"
+                required
+                ngModel
+                #Email="ngModel"
+                class="form-control"
+                id="email"
+                email
+                placeholder="Enter email"
+                [ngClass]="{
+                    'is-invalid': Email.touched && Email.invalid
+                  }"
+              />
+              <div class="alert alert-danger" *ngIf="Email.touched && Email.invalid">
+                <div *ngIf="Email.errors?.[required]">Email cannot be Empty</div>
+                <div *ngIf="Email.errors?.['email']"> Please Enter Valid Email Address </div>
+
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="pwd">Password</label>
+              <input
+                type="password"
+                name="password"
+                required
+                ngModel
+                #Password="ngModel"
+                class="form-control"
+                id="pwd"
+                placeholder="Enter password"
+                [ngClass]="{
+                    'is-invalid': Password.touched && Password.invalid
+                  }"
+              />
+              <div class="alert alert-danger" *ngIf="Password.touched && Password.invalid">
+                Password cannot be Empty
+              </div>
+            </div>
+            <button type="submit" [disabled]="loginForm.invalid" class="btn btn-info btn-block bg-theame mb-3">
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>

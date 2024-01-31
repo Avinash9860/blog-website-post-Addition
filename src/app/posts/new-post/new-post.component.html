@@ -1,0 +1,191 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <h3 class="text-theam-primary">{{formStatus}} new posts</h3>
+      <p>You Can {{formStatus}} your Post here</p>
+    </div>
+  </div>
+
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-md-7">
+        <div class="card shadow-effect">
+          <div class="card-body">
+            <div class="form-group">
+              <label>Title </label>
+              <input
+                type="text"
+                class="form-control"
+                (keyup)="onTitleChange($event)"
+                formControlName="title"
+                [ngClass]="{
+                  'is-invalid': fc.title.touched && fc.title.invalid
+                }"
+              />
+              <div *ngIf="fc.title.errors?.required">
+                <div
+                  class="alert alert-danger"
+                  *ngIf="fc.title.touched && fc.title.invalid"
+                >
+                  Title is Required.
+                </div>
+              </div>
+              <div *ngIf="fc.title.errors?.minlength">
+                <div
+                  class="alert alert-danger"
+                  *ngIf="fc.title.touched && fc.title.invalid"
+                >
+                  Title Must be at Least 10 character.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Permalink </label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="permalink"
+                name="Permalink"
+                formControlName="permalink"
+                readonly
+                [ngClass]="{
+                  'is-invalid': fc.permalink.touched && fc.permalink.invalid
+                }"
+              />
+              <div *ngIf="fc.permalink.errors?.required">
+                <div
+                  class="alert alert-danger"
+                  *ngIf="fc.permalink.touched && fc.permalink.invalid"
+                >
+                  permalink is Required.
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Excerpt </label>
+              <textarea
+                cols="30"
+                rows="10"
+                class="form-control"
+                formControlName="excerpt"
+                [ngClass]="{
+                  'is-invalid': fc.excerpt.touched && fc.excerpt.invalid
+                }"
+              ></textarea>
+              <div *ngIf="fc.excerpt.errors?.required">
+                <div
+                  class="alert alert-danger"
+                  *ngIf="fc.excerpt.touched && fc.excerpt.invalid"
+                >
+                  excerpt is Required.
+                </div>
+              </div>
+
+              <div *ngIf="fc.excerpt.errors?.minlength">
+                <div
+                  class="alert alert-danger"
+                  *ngIf="fc.excerpt.touched && fc.excerpt.invalid"
+                >
+                  excerpt Must be at Least 50 character.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-5">
+        <div class="form-group">
+          <label for="">Please Select a Post category</label>
+          <select
+            class="form-control"
+            formControlName="category"
+            [ngClass]="{
+              'is-invalid': fc.category.touched && fc.category.invalid
+            }"
+          >
+            <option value="">Please Select a Category</option>
+            <option
+              *ngFor="let categorydata of categoryArray"
+             
+              value="{{ categorydata.id}}-{{ categorydata.category}} "
+           
+            >
+              {{ categorydata.category  }}
+            </option>
+          </select>
+          <div *ngIf="fc.category.errors?.required">
+            <div
+              class="alert alert-danger"
+              *ngIf="fc.category.touched && fc.category.invalid"
+            >
+              category is Required.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="">Post image</label>
+          <img [src]="imgSrc" class="form-control img-fluid img-preview" />
+          <input
+            type="file"
+            class="form-control"
+            accept="image/*"
+            (change)="showpreview($event)"
+            formControlName="postimg"
+            [ngClass]="{
+              'is-invalid': fc.postimg.touched && fc.postimg.invalid
+            }"
+          />
+          <div *ngIf="fc.postimg.errors?.required">
+            <div
+              class="alert alert-danger"
+              *ngIf="fc.postimg.touched && fc.postimg.invalid"
+            >
+              postimg is Required.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-3">
+      <div class="col-md-12">
+        <div class="card shadow-effect">
+          <div class="card-body">
+            <div class="form-group">
+              <label for="">Content</label>
+              <angular-editor
+                placeholder="Add your Content here "
+                formControlName="content"
+                [ngClass]="{
+                  'is-invalid': fc.content.touched && fc.content.invalid
+                }"
+              ></angular-editor>
+              <div *ngIf="fc.content.errors?.required">
+                <div
+                  class="alert alert-danger"
+                  *ngIf="fc.content.touched && fc.content.invalid"
+                >
+                  content is Required.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 text-center mb-5">
+        <button class="btn btn-info bg-theame"  [disabled]="postForm.invalid">
+          {{formStatus}}
+        </button>
+
+      
+        <button class="btn btn-warning ml-3" routerLink="/posts">
+          Back to Post
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
